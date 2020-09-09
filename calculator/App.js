@@ -46,10 +46,10 @@ export default function App() {
         <Button onPress={calculateSubstract} title="-" />
         <StatusBar style="auto" />
       </View>
-      <Text>{hist}</Text>
+      {hist.map((historyItem, index) => {
+        return <Text key={index}>{historyItem}</Text>;
+      })}
     </View>
   );
 }
-
-
 
