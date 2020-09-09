@@ -7,13 +7,20 @@ export default function App() {
   const [value1, setValue1] = React.useState();
   const [value2, setValue2] = React.useState();
   const [solution, setSolution] = React.useState('No calculation done yet!');
+  const [hist, setHist] = React.useState([]);
 
   const calculateSum = () => {
-    setSolution(parseInt(value1) + parseInt(value2));
+    const result = parseInt(value1) + parseInt(value2);
+    const strCalc = value1 + " + " + value2 + " = " + result;
+    setHist([strCalc, ...hist]);
+    setSolution(result);
   }
 
   const calculateSubstract = () => {
-    setSolution(parseInt(value1) - parseInt(value2));
+    const result = parseInt(value1) - parseInt(value2);
+    const strCalc = value1 + " - " + value2 + " = " + result;
+    setHist([strCalc, ...hist]);
+    setSolution(result);
   }
 
   const styles = StyleSheet.create({
@@ -23,7 +30,6 @@ export default function App() {
       marginLeft: 130,
       marginRight: 130,
       marginTop: 10
-
     }
   });
   
@@ -40,6 +46,7 @@ export default function App() {
         <Button onPress={calculateSubstract} title="-" />
         <StatusBar style="auto" />
       </View>
+      <Text>{hist}</Text>
     </View>
   );
 }
