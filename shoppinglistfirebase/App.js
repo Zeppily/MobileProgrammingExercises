@@ -5,13 +5,7 @@ import * as firebase from 'firebase';
 
 // db connection
 const firebaseConfig = {
-  apiKey: "AIzaSyBH3eNZGFnZTQUPvMSHVLsAffIc_lLMcQg",
-  authDomain: "shoppinglistfirebase-fbda7.firebaseapp.com",
-  databaseURL: "https://shoppinglistfirebase-fbda7.firebaseio.com",
-  projectId: "shoppinglistfirebase-fbda7",
-  storageBucket: "shoppinglistfirebase-fbda7.appspot.com",
-  messagingSenderId: "635901068495",
-  appId: "1:635901068495:web:78f7125277ae373a29a3ba"
+ // Your db configs to be put here
 };
 
 firebase.initializeApp(firebaseConfig);
