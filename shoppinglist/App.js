@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View, Button, FlatList, TextInput, Alert, AsyncStorage } from "react-native";
+import { StyleSheet, Text, View,  FlatList, TextInput, Alert, AsyncStorage } from "react-native";
 import * as SQLite from 'expo-sqlite';
+import { Header, Input, Button, Icon, ListItem } from 'react-native-elements';
 
 // db connection
 const db = SQLite.openDatabase('shoppingList.db');
@@ -57,55 +58,41 @@ export default function App() {
     );
   };
 
+  
+  renderItem = ({ item }) => (    
+    <ListItem bottomDivider onLongPress={() => deleteItem(item.id)}>
+      <ListItem.Content>
+        <ListItem.Title>{item.item}</ListItem.Title>
+        <ListItem.Subtitle>{item.amount}</ListItem.Subtitle>
+      </ListItem.Content>
+      <ListItem.Chevron color="white" />
+    </ListItem>
+  )
+
+
   return (
-    <View style={styles.container}>
-        <TextInput
+    <View>
+      <Header centerComponent={{text: 'SHOPPING LIST', style: {color:'#fff'}}} />
+        <Input
           value={item}
-          onChangeText={(item) => setItem(item)}
-          style={{marginTop: 30, fontSize: 18, width: 200, borderColor: 'gray', borderWidth: 1}}
-          placeholder='item'
+          onChangeText={(item) => setItem(item)}          
+          placeholder='Product'
         />
-        <TextInput
+        <Input
           value={amount}
-          onChangeText={(amount) => setAmount(amount)}
-          style={{ marginTop: 5, marginBottom: 5,  fontSize:18, width: 200, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(amount) => setAmount(amount)}          
           placeholder='amount'
         />        
         <StatusBar style="auto" />
-        <Button onPress={addItem} title="ADD" />
-        <Text style={{color: 'blue'}}> Shopping List</Text> 
+        <Button icon={<Icon name='save' color='#fff' />} onPress={addItem} title=" SAVE" />
+        <Text>Hold down on an item to delete</Text>
         <FlatList
           data={list}
           keyExtractor={item => item.id.toString()} 
-          renderItem={({ item }) => 
-          <View style={styles.listcontainer}>
-            <Text style={{fontSize: 20}}>{item.item}, {item.amount}</Text>
-            <Text style={{fontSize: 20, color: '#0000ff'}} onPress={() => deleteItem(item.id)}> bought</Text>
-          </View>} 
+          renderItem={renderItem}
           ItemSeparatorComponent={listSeparator} 
         />
 
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   backgroundColor: '#fff',
-   alignItems: 'center',
-   justifyContent: 'center',
-  },
-  listcontainer: {
-   flexDirection: 'row',
-   backgroundColor: '#fff',
-   alignItems: 'center'
-  },
-  textInputs: {
-    marginTop: 30,
-    fontSize: 18,
-    width: 200,
-    borderColor: 'gray',
-    borderWidth: 1,
-  },
- });
